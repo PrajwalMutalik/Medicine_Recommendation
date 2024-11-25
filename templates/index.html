@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Health Care Center</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  </head>
+
+  <style>
+        body {
+  background: linear-gradient(180deg, rgba(255, 235, 205, 1) 0%, rgba(255, 182, 193, 1) 50%, rgba(255, 160, 122, 1) 100%);
+  color: #4b4b4b; /* Neutral text color for readability */
+  font-family: 'Arial', sans-serif; /* Modern font for a clean look */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            color: black;
+            margin-top: 0;
+            margin-left: 2px;
+
+        }
+
+        .myimg {
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            border-radius: 25px;
+        }
+
+        .mainsection {
+            width: 100%;
+            max-width: 600px; /* Adjust the width as needed */
+            margin: 20px auto; /* Center the box horizontally */
+            border: 1px solid #ccc; /* Optional border */
+            border-radius: 10px;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            overflow-y: auto; /* Enable vertical scrolling */
+            height: 300px; /* Set height for scrolling */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+
+        .mainsection ul {
+            list-style-type: none; /* Remove bullet points */
+            margin: 0;
+            padding: 0;
+        }
+
+        .mainsection li {
+            margin: 5px 0; /* Space between list items */
+        }
+
+        h3 {
+            text-align: center; /* Center the heading */
+            margin-bottom: 10px;
+        }
+      .copy-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.copy-btn:hover {
+    background-color: #45a049;
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <!-- Logo at the top-left corner -->
+            <div class="logo">
+                <img class="myimg" src="{{ url_for('static', filename='logo.jpg') }}" alt="">
+            </div>
+
+            <a class="navbar-brand" href="#"> <b>Health Tracker</b></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/developer">Developer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+<header>
+    <p>Developer : Fida Khanum</p>
+</header>
+
+
+
+<!-- main form of page -->
+<h1 class="mt-4 my-4 text-center text-green">Health Tracker Tool</h1>
+<div class="container my-4 mt-4"
+     style="background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;">    <form action="/predict" method="post">
+        <div class="form-group">
+            <label for="symptoms">Select Symptoms:</label>
+            <input type="text" class="form-control", id="symptoms" name="symptoms" placeholder="type systems such as itching, skin_rash, shivering  etc">
+
+        </div>
+        <br>
+        <br>
+
+
+        <button type="submit" class="btn btn-danger btn-lg" style=" background-color: rgba(255, 255, 255, 0.2);backdrop-filter: blur(5px);transition: background-color 0.3s, color 0.3s;width: 100%; padding: 14px; margin-bottom: 5px; color: black">Predict</button>
+    </form>
+</div>
+
+
+{% if predicted_disease %}
+
+<!-- Results -->
+<h1 class="text-center my-4 mt-4">Our AI Doctor Results</h1>
+<div class="container">
+
+    <div class="result-container">
+        <!-- Buttons to toggle display -->
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal" style="padding:4px;  margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%);;color:white;">Disease</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%); ;color:white;">Description</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%); ;color:white;">Precaution</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px;border-radius:5px; background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%); ;color:white;">Medications</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%); ;color:white;">Workouts</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%);;color:white;">Diets</button>
+    </div>
+</div>
+
+{% endif %}
+
+<!-- Disease Modal -->
+    <div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%); color:white;"> <!-- Set header background color inline -->
+                    <h5 class="modal-title" id="diseaseModalLabel">Predicted Disease</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background-color: #modal-body-color;"> <!-- Set modal body background color inline -->
+                    <p>{{ predicted_disease }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Description Modal -->
+    <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%);; color:white;">
+                    <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ dis_des }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Precaution Modal -->
+    <div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%);color:white;">
+                    <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in my_precautions %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Medications Modal -->
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%); color:white;">
+                    <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in medications %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workouts Modal -->
+    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%); color:white;">
+                    <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in workout %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diets Modal -->
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(145deg, rgba(241, 148, 72, 1) 0%, rgba(247, 183, 105, 1) 50%, rgba(244, 101, 140, 1) 100%); color:white;">
+                    <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in my_diet %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="mainsection">
+    <div class="section">
+        <h3>Available Prompts</h3>
+        <ul>
+            <li><span>shivering</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>itching</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>skin_rash</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>continuous_sneezing</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>stomach_pain</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>acidity</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>vomiting</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>indigestion</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>muscle_wasting</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>patches_in_throat</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>fatigue</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <ul>
+            <li><span>weight_loss</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>sunken_eyes</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>cough</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>headache</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>chest_pain</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>back_pain</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>weakness_in_limbs</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>chills</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>joint_pain</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>yellowish_skin</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>constipation</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <ul>
+            <li><span>pain_during_bowel_movements</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>breathlessness</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>cramps</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>weight_gain</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>mood_swings</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>neck_pain</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>muscle_weakness</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>stiff_neck</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>pus_filled_pimples</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>burning_micturition</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>bladder_discomfort</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+            <li><span>high_fever</span> <button class="copy-btn" onclick="copyText(this)">Copy</button></li>
+        </ul>
+    </div>
+</div>
+    <script>
+        function copyText(button) {
+    // Get the text from the span element
+    var text = button.previousElementSibling.textContent;
+
+    // Create a temporary input to copy the text
+    var input = document.createElement('input');
+    input.value = text;
+    document.body.appendChild(input);
+
+    // Select and copy the text
+    input.select();
+    document.execCommand('copy');
+
+    // Remove the temporary input
+    document.body.removeChild(input);
+
+    // Provide feedback (optional)
+    button.textContent = 'Copied!';
+    setTimeout(function() {
+        button.textContent = 'Copy'; // Reset text after 1 second
+    }, 1000);
+}
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
