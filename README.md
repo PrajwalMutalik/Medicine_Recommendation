@@ -1,5 +1,5 @@
-#Medicine Predictor 
-Overview
+# Medicine Predictor 
+# Overview
 
 This project is a Disease Prediction and Treatment Recommendation System that leverages machine learning techniques to predict the type of disease based on user-inputted symptoms. Additionally, it provides a list of treatments, recommended ingredients, and dietary suggestions to help manage or cure the predicted condition.
 
@@ -9,7 +9,7 @@ Backend (Machine Learning): Implemented in Python for disease prediction.
 
 Frontend: Built using HTML, CSS, and JavaScript for an intuitive and user-friendly interface.
 
-Features
+# Features
 
 Symptom-based Disease Prediction: Users can input their symptoms, and the system predicts the most probable disease.
 
@@ -19,13 +19,13 @@ Dietary Recommendations: Suggests ingredients and foods that may help alleviate 
 
 Interactive Interface: A clean and simple web interface for user interactions.
 
-Technologies Used
+# Technologies Used
 
 Backend (Machine Learning):
 
 Programming Language: Python
 
-Libraries:
+# Libraries:
 
 Pandas: For data preprocessing and handling.
 
@@ -35,14 +35,7 @@ Scikit-learn: For implementing and training the machine learning model.
 
 Flask: To serve the model as a REST API.
 
-Frontend:
+# Frontend:
 
 Languages: HTML, CSS, JavaScript
 
-Features:
-
-Responsive design using CSS.
-
-JavaScript for API communication and dynamic content rendering.
-
-Clean UI for seamless user interaction.
